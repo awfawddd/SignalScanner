@@ -18,21 +18,17 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
+
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
 
-    - name: Find project and build
+    - name: Build APK
       run: |
-        # Find where build.gradle is
-        PROJECT_DIR=$(find . -name "settings.gradle" -exec dirname {} \; | head -1)
-        echo "Project found at: $PROJECT_DIR"
-        cd "$PROJECT_DIR"
-        
-        # Generate gradle wrapper if missing
-        if [ ! -f "gradlew" ]; then
-          gradle wrapper --gradle-version 8.2
-        fi
-        
+        cd SignalScanner
+        rm -f gradlew
+        gradle wrapper --gradle-version 8.2
         chmod +x gradlew
         ./gradlew assembleDebug
 
@@ -40,4 +36,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: SignalScanner-APK
-        path: ./**/app/build/outputs/apk/debug/*.apk
+        path: SignalScanner/app/build/outputs/apk/debug/*.apk
