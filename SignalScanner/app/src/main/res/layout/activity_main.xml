@@ -92,6 +92,74 @@
             android:layout_margin="2dp" />
     </LinearLayout>
 
+    <!-- Connection Panel -->
+    <LinearLayout
+        android:id="@+id/connectionPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/item_background"
+        android:padding="14dp"
+        android:layout_marginBottom="12dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvConnDevice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dispositivo"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:fontFamily="monospace" />
+
+                <TextView
+                    android:id="@+id/tvConnStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🟡 Connessione..."
+                    android:textColor="#FFAB00"
+                    android:textSize="12sp"
+                    android:fontFamily="monospace"
+                    android:layout_marginTop="2dp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnDisconnect"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="Disconnetti"
+                android:textColor="#FF1744"
+                android:textSize="11sp"
+                android:fontFamily="monospace"
+                android:textAllCaps="false"
+                android:background="@drawable/scan_button_bg"
+                android:paddingHorizontal="12dp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvConnServices"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="#888888"
+            android:textSize="11sp"
+            android:fontFamily="monospace"
+            android:layout_marginTop="10dp" />
+    </LinearLayout>
+
     <!-- Status -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -131,7 +199,6 @@
         android:indeterminate="true"
         android:visibility="gone"
         android:layout_marginBottom="8dp"
-        android:progressTint="#00E5FF"
         android:indeterminateTint="#00E5FF" />
 
     <!-- Results List -->
