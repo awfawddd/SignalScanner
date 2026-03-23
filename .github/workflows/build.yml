@@ -27,6 +27,26 @@ jobs:
         unzip -q gradle-8.2-bin.zip
         echo "$PWD/gradle-8.2/bin" >> $GITHUB_PATH
 
+    - name: Fix project files
+      run: |
+        cd SignalScanner
+        
+        # Remove package from manifest (namespace is in build.gradle)
+        sed -i 's/package="com.signalscanner"//' app/src/main/AndroidManifest.xml
+        
+        # Create launcher icon (simple green circle)
+        mkdir -p app/src/main/res/mipmap-hdpi
+        mkdir -p app/src/main/res/mipmap-mdpi
+        mkdir -p app/src/main/res/mipmap-xhdpi
+        mkdir -p app/src/main/res/mipmap-xxhdpi
+        
+        # Generate simple PNG icon using ImageMagick
+        sudo apt-get install -y imagemagick -qq
+        convert -size 48x48 xc:none -fill '#00E5FF' -draw 'circle 24,24 24,2' -fill white -font Helvetica -pointsize 20 -gravity center -draw "text 0,0 'S'" app/src/main/res/mipmap-mdpi/ic_launcher.png
+        convert -size 72x72 xc:none -fill '#00E5FF' -draw 'circle 36,36 36,3' -fill white -font Helvetica -pointsize 30 -gravity center -draw "text 0,0 'S'" app/src/main/res/mipmap-hdpi/ic_launcher.png
+        convert -size 96x96 xc:none -fill '#00E5FF' -draw 'circle 48,48 48,4' -fill white -font Helvetica -pointsize 40 -gravity center -draw "text 0,0 'S'" app/src/main/res/mipmap-xhdpi/ic_launcher.png
+        convert -size 144x144 xc:none -fill '#00E5FF' -draw 'circle 72,72 72,6' -fill white -font Helvetica -pointsize 60 -gravity center -draw "text 0,0 'S'" app/src/main/res/mipmap-xxhdpi/ic_launcher.png
+
     - name: Build APK
       run: |
         cd SignalScanner
