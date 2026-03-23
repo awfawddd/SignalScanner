@@ -21,14 +21,23 @@ jobs:
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-
-    - name: Build Debug APK
-      run: ./gradlew assembleDebug
+    - name: Find project and build
+      run: |
+        # Find where build.gradle is
+        PROJECT_DIR=$(find . -name "settings.gradle" -exec dirname {} \; | head -1)
+        echo "Project found at: $PROJECT_DIR"
+        cd "$PROJECT_DIR"
+        
+        # Generate gradle wrapper if missing
+        if [ ! -f "gradlew" ]; then
+          gradle wrapper --gradle-version 8.2
+        fi
+        
+        chmod +x gradlew
+        ./gradlew assembleDebug
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: SignalScanner-APK
-        path: app/build/outputs/apk/debug/app-debug.apk
+        path: ./**/app/build/outputs/apk/debug/*.apk
